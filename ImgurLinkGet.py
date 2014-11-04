@@ -12,7 +12,7 @@ class ImgurLinkGet:
 		self.images = [] # reset data
 		parsed = urlparse.urlparse(url)
 
-		if parsed.netloc != "imgur.com":
+		if parsed.netloc != "imgur.com" and parsed.netloc != "i.imgur.com":
 			return False
 
 		if parsed.path.startswith("/gallery"):
@@ -26,7 +26,9 @@ class ImgurLinkGet:
 			return False
 
 		else:
-			self.images.append({'hash' : parsed.path[1:], 'ext' : '.jpg'}) #todo get correct filetype
+			afterDomain = parsed.path[1:]
+			hash = afterDomain.split(".")[0]
+			self.images.append({'hash' : hash, 'ext' : '.jpg'}) #todo get correct filetype
 
 		return True
 
@@ -82,6 +84,15 @@ if __name__ == '__main__':
 		print imgurLinkGet.get_originals()
 
 	if imgurLinkGet.load_data("http://imgur.com/lqH3gJq"):
+		print imgurLinkGet.get_small_squares()
+		print imgurLinkGet.get_big_squares()
+		print imgurLinkGet.get_small_thumbnails()
+		print imgurLinkGet.get_medium_thumbnails()
+		print imgurLinkGet.get_large_thumbnails()
+		print imgurLinkGet.get_huge_thumbnails()
+		print imgurLinkGet.get_originals()
+
+	if imgurLinkGet.load_data("http://i.imgur.com/AYHlpqY.jpg"):
 		print imgurLinkGet.get_small_squares()
 		print imgurLinkGet.get_big_squares()
 		print imgurLinkGet.get_small_thumbnails()
