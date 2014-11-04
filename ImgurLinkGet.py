@@ -4,10 +4,10 @@ import urlparse
 
 class ImgurLinkGet:
 	def __init__(self):
-		self.data = []
+		self.images = []
 
 	def load_data(self, url):
-		self.data = [] # reset data
+		self.images = [] # reset data
 		parsed = urlparse.urlparse(url)
 		if parsed.netloc != "imgur.com":
 			return False
@@ -17,17 +17,17 @@ class ImgurLinkGet:
 			images =  jsn['data']['image']['album_images']['images']
 			for image in images:
 				date = {'hash' : image['hash'], 'ext' : image['ext']}
-				self.data.append(date)
+				self.images.append(date)
 		elif parsed.path.startswith("/user"):
 			return False
 		else:
 			date = {'hash' : parsed.path[1:], 'ext' : '.jpg'} #todo get correct filetype
-			self.data.append(date)
+			self.images.append(date)
 		return True
 
 	def _get_any(self,suffix):
 		links = []
-		for date in self.data:
+		for date in self.images:
 			links.append("http://i.imgur.com/" + date['hash'] + suffix + date['ext'])
 		return links
 
