@@ -20,7 +20,7 @@ class ImgurLinkGet:
 			jsn = json.loads(response.read())
 			images =  jsn['data']['image']['album_images']['images']
 			for image in images:
-				self.images.append({'hash' : image['hash'], 'ext' : image['ext']})
+				self.images.append({'hash' : image['hash'].encode("utf-8"), 'ext' : image['ext'].encode("utf-8")})
 
 		elif parsed.path.startswith("/user"):
 			return False
