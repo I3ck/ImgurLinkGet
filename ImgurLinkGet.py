@@ -17,7 +17,8 @@ class ImgurLinkGet:
 			jsn = json.loads(response.read())
 			images =  jsn['data']['image']['album_images']['images']
 			for image in images:
-				self.data.append(image['hash'] + image['ext'])
+				date = {'hash' : image['hash'], 'ext' : image['ext']}
+				self.data.append(date)
 			print "is a gallery" #todo just for debugging, remove later
 			print self.data
 			# do gallery stuff
@@ -25,7 +26,8 @@ class ImgurLinkGet:
 			print "is a user" #todo just for debugging, remove later
 			return False
 		else:
-			self.data = ["http://i.imgur.com" + parsed.path + ".jpg", ] #todo get correct filetype
+			date = {'hash' : parsed.path[1:], 'ext' : '.jpg'} #todo get correct filetype
+			self.data.append(date)
 			print self.data #todo just for debugging, remove later
 		#response = urllib.urlopen(url)
 		#print response.read()
@@ -56,3 +58,4 @@ class ImgurLinkGet:
 if __name__ == '__main__':
 	imgurLinkGet = ImgurLinkGet()
 	imgurLinkGet.load_data("http://imgur.com/gallery/qMEJb")
+	imgurLinkGet.load_data("http://imgur.com/lqH3gJq")
