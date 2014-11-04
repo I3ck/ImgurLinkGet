@@ -7,10 +7,9 @@ class ImgurLinkGet:
 		self.data = []
 
 	def load_data(self, url):
-		self.data = [] # reset data (todo make another mode to append data or create a reset method)
+		self.data = [] # reset data
 		parsed = urlparse.urlparse(url)
 		if parsed.netloc != "imgur.com":
-			print "no imgur url" #todo just for debugging, remove later
 			return False
 		if parsed.path.startswith("/gallery"):
 			response = urllib.urlopen("http://imgur.com" + parsed.path + ".json")
@@ -19,10 +18,7 @@ class ImgurLinkGet:
 			for image in images:
 				date = {'hash' : image['hash'], 'ext' : image['ext']}
 				self.data.append(date)
-			print "is a gallery" #todo just for debugging, remove later
-			# do gallery stuff
 		elif parsed.path.startswith("/user"):
-			print "is a user" #todo just for debugging, remove later
 			return False
 		else:
 			date = {'hash' : parsed.path[1:], 'ext' : '.jpg'} #todo get correct filetype
