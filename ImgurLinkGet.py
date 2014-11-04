@@ -25,8 +25,8 @@ class ImgurLinkGet:
 
 	def _get_any(self,suffix):
 		links = []
-		for date in self.images:
-			links.append("http://i.imgur.com/" + date['hash'] + suffix + date['ext'])
+		for image in self.images:
+			links.append("http://i.imgur.com/" + image['hash'] + suffix + image['ext'])
 		return links
 
 	def get_small_squares(self):
