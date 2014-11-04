@@ -16,13 +16,11 @@ class ImgurLinkGet:
 			jsn = json.loads(response.read())
 			images =  jsn['data']['image']['album_images']['images']
 			for image in images:
-				date = {'hash' : image['hash'], 'ext' : image['ext']}
-				self.images.append(date)
+				self.images.append({'hash' : image['hash'], 'ext' : image['ext']})
 		elif parsed.path.startswith("/user"):
 			return False
 		else:
-			date = {'hash' : parsed.path[1:], 'ext' : '.jpg'} #todo get correct filetype
-			self.images.append(date)
+			self.images.append({'hash' : parsed.path[1:], 'ext' : '.jpg'}) #todo get correct filetype
 		return True
 
 	def _get_any(self,suffix):
