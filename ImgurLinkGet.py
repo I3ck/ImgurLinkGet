@@ -30,10 +30,10 @@ class ImgurLinkGet:
 		return True
 
 	def _get_any(self,suffix):
-		srcs = []
+		links = []
 		for date in self.data:
-			srcs.append("http://i.imgur.com/" + date['hash'] + suffix + date['ext'])
-		return srcs
+			links.append("http://i.imgur.com/" + date['hash'] + suffix + date['ext'])
+		return links
 
 	def get_small_squares(self):
 		return self._get_any("s")
