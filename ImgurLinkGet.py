@@ -7,7 +7,7 @@ class ImgurLinkGet:
 		self.data = []
 
 	def load_data(self, url):
-		self.data = [] # reset data
+		self.data = [] # reset data (todo make another mode to append data or create a reset method)
 		parsed = urlparse.urlparse(url)
 		if parsed.netloc != "imgur.com":
 			print "no imgur url" #todo just for debugging, remove later
@@ -20,7 +20,6 @@ class ImgurLinkGet:
 				date = {'hash' : image['hash'], 'ext' : image['ext']}
 				self.data.append(date)
 			print "is a gallery" #todo just for debugging, remove later
-			print self.data
 			# do gallery stuff
 		elif parsed.path.startswith("/user"):
 			print "is a user" #todo just for debugging, remove later
@@ -28,34 +27,54 @@ class ImgurLinkGet:
 		else:
 			date = {'hash' : parsed.path[1:], 'ext' : '.jpg'} #todo get correct filetype
 			self.data.append(date)
-			print self.data #todo just for debugging, remove later
-		#response = urllib.urlopen(url)
-		#print response.read()
 		return True
 
-	def get_small_squares():
-		pass
+	def _get_any(self,suffix):
+		srcs = []
+		for date in self.data:
+			srcs.append("http://i.imgur.com/" + date['hash'] + suffix + date['ext'])
+		return srcs
 
-	def get_big_squares():
-		pass
+	def get_small_squares(self):
+		return self._get_any("s")
 
-	def get_small_thumbnails():
-		pass
+	def get_big_squares(self):
+		return self._get_any("b")
 
-	def get_medium_thumbnails():
-		pass
+	def get_small_thumbnails(self):
+		return self._get_any("t")
 
-	def get_large_thumbnails():
-		pass
+	def get_medium_thumbnails(self):
+		return self._get_any("m")
 
-	def get_huge_thumbnails():
-		pass
+	def get_large_thumbnails(self):
+		return self._get_any("l")
 
-	def get_originals():
-		pass
+	def get_huge_thumbnails(self):
+		return self._get_any("h")
+
+	def get_originals(self):
+		return self._get_any("")
 
 
 if __name__ == '__main__':
+	"""this is meant as a basic usage example"""
 	imgurLinkGet = ImgurLinkGet()
-	imgurLinkGet.load_data("http://imgur.com/gallery/qMEJb")
-	imgurLinkGet.load_data("http://imgur.com/lqH3gJq")
+
+	if imgurLinkGet.load_data("http://imgur.com/gallery/qMEJb"):
+		print imgurLinkGet.get_small_squares()
+		print imgurLinkGet.get_big_squares()
+		print imgurLinkGet.get_small_thumbnails()
+		print imgurLinkGet.get_medium_thumbnails()
+		print imgurLinkGet.get_large_thumbnails()
+		print imgurLinkGet.get_huge_thumbnails()
+		print imgurLinkGet.get_originals()
+
+	if imgurLinkGet.load_data("http://imgur.com/lqH3gJq"):
+		print imgurLinkGet.get_small_squares()
+		print imgurLinkGet.get_big_squares()
+		print imgurLinkGet.get_small_thumbnails()
+		print imgurLinkGet.get_medium_thumbnails()
+		print imgurLinkGet.get_large_thumbnails()
+		print imgurLinkGet.get_huge_thumbnails()
+		print imgurLinkGet.get_originals()
